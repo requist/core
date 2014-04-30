@@ -1,4 +1,5 @@
 <?php
+$l = OC_L10N::get('files_sharing');
 
 OC::$CLASSPATH['OC_Share_Backend_File'] = 'files_sharing/lib/share/file.php';
 OC::$CLASSPATH['OC_Share_Backend_Folder'] = 'files_sharing/lib/share/folder.php';
@@ -18,3 +19,22 @@ OCP\Util::addScript('files_sharing', 'share');
 \OC_Hook::connect('OC_Filesystem', 'delete', '\OC\Files\Cache\Shared_Updater', 'deleteHook');
 \OC_Hook::connect('OC_Filesystem', 'post_rename', '\OC\Files\Cache\Shared_Updater', 'renameHook');
 \OC_Hook::connect('OC_Appconfig', 'post_set_value', '\OCA\Files\Share\Maintainer', 'configChangeHook');
+
+\OCA\Files\App::getNavigationManager()->add(
+	array(
+		"id" => 'sharingin',
+		"appname" => 'files_sharing',
+		"script" => 'list.php',
+		"order" => 3,
+		"name" => $l->t('Shared with you')
+	)
+);
+\OCA\Files\App::getNavigationManager()->add(
+	array(
+		"id" => 'sharingout',
+		"appname" => 'files_sharing',
+		"script" => 'list.php',
+		"order" => 4,
+		"name" => $l->t('Shared with others')
+	)
+);
