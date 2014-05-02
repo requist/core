@@ -32,9 +32,14 @@ if (isset($_GET['limit'])) {
 } else {
 	$limit = 10;
 }
+if (isset($_GET['filter'])) {
+	$filter = $_GET['filter'];
+} else {
+	$filter = '';
+}
 $users = array();
 if (OC_User::isAdminUser(OC_User::getUser())) {
-	$batch = OC_User::getDisplayNames('', $limit, $offset);
+	$batch = OC_User::getDisplayNames($filter, $limit, $offset);
 	foreach ($batch as $user => $displayname) {
 		$users[] = array(
 			'name' => $user,
@@ -45,7 +50,7 @@ if (OC_User::isAdminUser(OC_User::getUser())) {
 	}
 } else {
 	$groups = OC_SubAdmin::getSubAdminsGroups(OC_User::getUser());
-	$batch = OC_Group::usersInGroups($groups, '', $limit, $offset);
+	$batch = OC_Group::usersInGroups($groups, $filter, $limit, $offset);
 	foreach ($batch as $user) {
 		$users[] = array(
 			'name' => $user,
