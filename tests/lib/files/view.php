@@ -20,6 +20,7 @@ class View extends \PHPUnit_Framework_TestCase {
 	 * @var \OC\Files\Storage\Storage[] $storages
 	 */
 	private $storages = array();
+	private $user;
 
 	public function setUp() {
 		\OC_User::clearBackends();
@@ -566,6 +567,44 @@ class View extends \PHPUnit_Framework_TestCase {
 		$this->assertCount(count($names), $list);
 		foreach ($list as $item) {
 			$this->assertContains($item['name'], $names);
+		}
+	}
+
+	public function testLongPath() {
+
+		$storage = new \OC\Files\Storage\Temporary(array());
+		\OC\Files\Filesystem::mount($storage, array(), '/');
+
+		$rootView = new \OC\Files\View('');
+
+		$longPath = '';
+		foreach (range(0, 121) as $i) {
+			$longPath .= '/abcdefghijklmnopqrstuvwxyz012345';
+			$result = $rootView->mkdir($longPath);
+			$this->assertTrue($result, "mkdir failed on $i");
+
+			$result = $rootView->file_put_contents($longPath . '/test.txt', 'lorem');
+			$this->assertEquals(5, $result, "file_put_contents failed on $i");
+
+			$this->assertTrue($rootView->file_exists($longPath));
+			$this->assertTrue($rootView->file_exists($longPath . '/test.txt'));
+		}
+
+		$cache = $storage->getCache();
+		$scanner = $storage->getScanner();
+		$scanner->scan('');
+
+		$longPath = 'abcdefghijklmnopqrstuvwxyz012345';
+		foreach (range(0, 120) as $i) {
+			$cachedFolder = $cache->get($longPath);
+			$this->assertTrue(is_array($cachedFolder), "No cache entry for folder at $i");
+			$this->assertEquals('abcdefghijklmnopqrstuvwxyz012345', $cachedFolder['name'], "Wrong cache entry for folder at $i");
+
+			$cachedFile = $cache->get($longPath . '/test.txt');
+			$this->assertTrue(is_array($cachedFile), "No cache entry for file at $i");
+			$this->assertEquals('test.txt', $cachedFile['name'], "Wrong cache entry for file at $i");
+
+			$longPath .= '/abcdefghijklmnopqrstuvwxyz012345';
 		}
 	}
 
