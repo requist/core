@@ -578,10 +578,13 @@ class View extends \PHPUnit_Framework_TestCase {
 		$rootView = new \OC\Files\View('');
 
 		$longPath = '';
-		foreach (range(0, 121) as $i) {
-			$longPath .= '/abcdefghijklmnopqrstuvwxyz012345';
+		// 4000 is the maximum path length in file_cache.path
+		$folderName = 'abcdefghijklmnopqrstuvwxyz012345678901234567890123456789';
+		$depth = (4000/57);
+		foreach (range(0, $depth) as $i) {
+			$longPath .= '/'.$folderName;
 			$result = $rootView->mkdir($longPath);
-			$this->assertTrue($result, "mkdir failed on $i");
+			$this->assertTrue($result, "mkdir failed on $i - path length: " . strlen($longPath));
 
 			$result = $rootView->file_put_contents($longPath . '/test.txt', 'lorem');
 			$this->assertEquals(5, $result, "file_put_contents failed on $i");
@@ -594,17 +597,17 @@ class View extends \PHPUnit_Framework_TestCase {
 		$scanner = $storage->getScanner();
 		$scanner->scan('');
 
-		$longPath = 'abcdefghijklmnopqrstuvwxyz012345';
-		foreach (range(0, 120) as $i) {
+		$longPath = $folderName;
+		foreach (range(0, $depth) as $i) {
 			$cachedFolder = $cache->get($longPath);
 			$this->assertTrue(is_array($cachedFolder), "No cache entry for folder at $i");
-			$this->assertEquals('abcdefghijklmnopqrstuvwxyz012345', $cachedFolder['name'], "Wrong cache entry for folder at $i");
+			$this->assertEquals($folderName, $cachedFolder['name'], "Wrong cache entry for folder at $i");
 
 			$cachedFile = $cache->get($longPath . '/test.txt');
 			$this->assertTrue(is_array($cachedFile), "No cache entry for file at $i");
 			$this->assertEquals('test.txt', $cachedFile['name'], "Wrong cache entry for file at $i");
 
-			$longPath .= '/abcdefghijklmnopqrstuvwxyz012345';
+			$longPath .= '/' . $folderName;
 		}
 	}
 
