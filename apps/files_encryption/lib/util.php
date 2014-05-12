@@ -1160,7 +1160,7 @@ class Util {
 
 	/**
 	 * @brief check if files are already migrated to the encryption system
-	 * @return migration status, false = if user doesn't exists
+	 * @return false|integer migration status, false = if user doesn't exists
 	 */
 	public function getMigrationStatus() {
 
