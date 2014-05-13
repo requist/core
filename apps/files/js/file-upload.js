@@ -471,8 +471,6 @@ OC.Upload = {
 					}
 				});
 
-			} else {
-				console.log('skipping file progress because your browser is broken');
 			}
 		}
 
