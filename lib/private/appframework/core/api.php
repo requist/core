@@ -4,7 +4,7 @@
  * ownCloud - App Framework
  *
  * @author Bernhard Posselt
- * @copyright 2012 Bernhard Posselt nukeawhale@gmail.com
+ * @copyright 2012 Bernhard Posselt <dev@bernhard-posselt.com>
  *
  * This library is free software; you can redistribute it and/or
  * modify it under the terms of the GNU AFFERO GENERAL PUBLIC LICENSE
@@ -136,7 +136,7 @@ class API implements IApi{
 	 * @brief Emits a signal. To get data from the slot use references!
 	 * @param string $signalClass class name of emitter
 	 * @param string $signalName name of signal
-	 * @param array $params defautl: array() array with additional data
+	 * @param array $params default: array() array with additional data
 	 * @return bool, true if slots exists or false if not
 	 */
 	public function emitHook($signalClass, $signalName, $params = array()) {

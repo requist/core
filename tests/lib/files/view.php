@@ -629,6 +629,7 @@ class View extends \PHPUnit_Framework_TestCase {
 	}
 
 	/**
+<<<<<<< HEAD
 	 * @dataProvider tooLongPathDataProvider
 	 * @expectedException \OCP\Files\InvalidPathException
 	 */
@@ -704,7 +705,26 @@ class View extends \PHPUnit_Framework_TestCase {
 			array('hash'),
 			array('hasUpdated', 0),
 			array('putFileInfo', array()),
+		);
+	}
 
+	/**
+	 * @dataProvider absolutePathProvider
+	 */
+	public function testGetAbsolutePath($expectedPath, $relativePath) {
+		$view = new \OC\Files\View('/files');
+		$this->assertEquals($expectedPath, $view->getAbsolutePath($relativePath));
+	}
+
+	function absolutePathProvider() {
+		return array(
+			array('/files/', ''),
+			array('/files/0', '0'),
+			array('/files/false', 'false'),
+			array('/files/true', 'true'),
+			array('/files/', '/'),
+			array('/files/test', 'test'),
+			array('/files/test', '/test'),
 		);
 	}
 }

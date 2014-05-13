@@ -4,7 +4,7 @@
  * ownCloud - App Framework
  *
  * @author Bernhard Posselt
- * @copyright 2012 Bernhard Posselt nukeawhale@gmail.com
+ * @copyright 2012 Bernhard Posselt dev@bernhard-posselt.com
  *
  * This library is free software; you can redistribute it and/or
  * modify it under the terms of the GNU AFFERO GENERAL PUBLIC LICENSE
@@ -22,34 +22,21 @@
  */
 
 
-namespace OC\AppFramework\Utility;
+namespace OCP\AppFramework\Db;
 
 
-class MethodAnnotationReaderTest extends \PHPUnit_Framework_TestCase {
-
-
-	/**
-	 * @Annotation
-	 */
-	public function testReadAnnotation(){
-		$reader = new MethodAnnotationReader('\OC\AppFramework\Utility\MethodAnnotationReaderTest',
-				'testReadAnnotation');
-
-		$this->assertTrue($reader->hasAnnotation('Annotation'));
-	}
-
+/**
+ * This is returned or should be returned when a find request finds more than one
+ * row
+ */
+class MultipleObjectsReturnedException extends \Exception {
 
 	/**
-	 * @Annotation
-	 * @param test
+	 * Constructor
+	 * @param string $msg the error message
 	 */
-	public function testReadAnnotationNoLowercase(){
-		$reader = new MethodAnnotationReader('\OC\AppFramework\Utility\MethodAnnotationReaderTest',
-				'testReadAnnotationNoLowercase');
-
-		$this->assertTrue($reader->hasAnnotation('Annotation'));
-		$this->assertFalse($reader->hasAnnotation('param'));
+	public function __construct($msg){
+		parent::__construct($msg);
 	}
-
 
 }

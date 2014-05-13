@@ -78,7 +78,9 @@ class OC_Helper {
 	 * Returns a absolute url to the given app and file.
 	 */
 	public static function linkToAbsolute($app, $file, $args = array()) {
-		return self::linkTo($app, $file, $args);
+		return OC::$server->getURLGenerator()->getAbsoluteURL(
+			self::linkTo($app, $file, $args)
+		);
 	}
 
 	/**
@@ -112,8 +114,10 @@ class OC_Helper {
 	 * Returns a absolute url to the given service.
 	 */
 	public static function linkToRemote($service, $add_slash = true) {
-		return self::makeURLAbsolute(self::linkToRemoteBase($service))
-		. (($add_slash && $service[strlen($service) - 1] != '/') ? '/' : '');
+		return OC::$server->getURLGenerator()->getAbsoluteURL(
+			self::linkToRemoteBase($service)
+				. (($add_slash && $service[strlen($service) - 1] != '/') ? '/' : '')
+		);
 	}
 
 	/**
@@ -125,8 +129,12 @@ class OC_Helper {
 	 * Returns a absolute url to the given service.
 	 */
 	public static function linkToPublic($service, $add_slash = false) {
-		return self::linkToAbsolute('', 'public.php') . '?service=' . $service
-		. (($add_slash && $service[strlen($service) - 1] != '/') ? '/' : '');
+		return OC::$server->getURLGenerator()->getAbsoluteURL(
+			self::linkTo(
+				'', 'public.php') . '?service=' . $service
+				. (($add_slash && $service[strlen($service) - 1] != '/') ? '/' : ''
+			)
+		);
 	}
 
 	/**
@@ -724,10 +732,22 @@ class OC_Helper {
 	 * @param string $parent
 	 * @return bool
 	 */
-	public static function issubdirectory($sub, $parent) {
-		if (strpos(realpath($sub), realpath($parent)) === 0) {
+	public static function isSubDirectory($sub, $parent) {
+		$realpathSub = realpath($sub);
+		$realpathParent = realpath($parent);
+
+		// realpath() may return false in case the directory does not exist
+		// since we can not be sure how different PHP versions may behave here
+		// we do an additional check whether realpath returned false
+		if($realpathSub === false ||  $realpathParent === false) {
+			return false;
+		}
+
+		// Check whether $sub is a subdirectory of $parent
+		if (strpos($realpathSub, $realpathParent) === 0) {
 			return true;
 		}
+
 		return false;
 	}
 
