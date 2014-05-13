@@ -581,7 +581,7 @@ class View extends \PHPUnit_Framework_TestCase {
 		// 4000 is the maximum path length in file_cache.path
 		$folderName = 'abcdefghijklmnopqrstuvwxyz012345678901234567890123456789';
 		$depth = (4000/57);
-		foreach (range(0, $depth) as $i) {
+		foreach (range(0, $depth-1) as $i) {
 			$longPath .= '/'.$folderName;
 			$result = $rootView->mkdir($longPath);
 			$this->assertTrue($result, "mkdir failed on $i - path length: " . strlen($longPath));
