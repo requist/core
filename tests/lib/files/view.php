@@ -598,7 +598,7 @@ class View extends \PHPUnit_Framework_TestCase {
 		$scanner->scan('');
 
 		$longPath = $folderName;
-		foreach (range(0, $depth) as $i) {
+		foreach (range(0, $depth-1) as $i) {
 			$cachedFolder = $cache->get($longPath);
 			$this->assertTrue(is_array($cachedFolder), "No cache entry for folder at $i");
 			$this->assertEquals($folderName, $cachedFolder['name'], "Wrong cache entry for folder at $i");
@@ -626,5 +626,85 @@ class View extends \PHPUnit_Framework_TestCase {
 
 		$info2 = $view->getFileInfo('/test/test');
 		$this->assertSame($info['etag'], $info2['etag']);
+	}
+
+	/**
+	 * @dataProvider tooLongPathDataProvider
+	 * @expectedException \OCP\Files\InvalidPathException
+	 */
+	public function testTooLongPath($operation, $param0 = NULL) {
+
+		$longPath = '';
+		// 4000 is the maximum path length in file_cache.path
+		$folderName = 'abcdefghijklmnopqrstuvwxyz012345678901234567890123456789';
+		$depth = (4000/57);
+		foreach (range(0, $depth+1) as $i) {
+			$longPath .= '/'.$folderName;
+		}
+
+		$storage = new \OC\Files\Storage\Temporary(array());
+		\OC\Files\Filesystem::mount($storage, array(), '/');
+
+		$rootView = new \OC\Files\View('');
+
+
+		if ($param0 === '@0') {
+			$param0 = $longPath;
+		}
+
+		if ($operation === 'hash') {
+			$param0 = $longPath;
+			$longPath = 'md5';
+		}
+
+		call_user_func(array($rootView, $operation), $longPath, $param0);
+
+	}
+
+	public function tooLongPathDataProvider() {
+		return array(
+			array('getAbsolutePath'),
+			array('getRelativePath'),
+			array('getMountPoint'),
+			array('resolvePath'),
+			array('getLocalFile'),
+			array('getLocalFolder'),
+			array('mkdir'),
+			array('rmdir'),
+			array('opendir'),
+			array('is_dir'),
+			array('is_file'),
+			array('stat'),
+			array('filetype'),
+			array('filesize'),
+			array('readfile'),
+			array('isCreatable'),
+			array('isReadable'),
+			array('isUpdatable'),
+			array('isDeletable'),
+			array('isSharable'),
+			array('file_exists'),
+			array('filemtime'),
+			array('touch'),
+			array('file_get_contents'),
+			array('unlink'),
+			array('deleteAll'),
+			array('toTmpFile'),
+			array('getMimeType'),
+			array('free_space'),
+			array('getFileInfo'),
+			array('getDirectoryContent'),
+			array('getOwner'),
+			array('getETag'),
+			array('file_put_contents', 'ipsum'),
+			array('rename', '@0'),
+			array('copy', '@0'),
+			array('fopen', 'r'),
+			array('fromTmpFile', '@0'),
+			array('hash'),
+			array('hasUpdated', 0),
+			array('putFileInfo', array()),
+
+		);
 	}
 }
