@@ -45,7 +45,7 @@
 </div>
 
 <div id="emptycontent" class="hidden"><?php p($l->t('Nothing in here. Upload something!'))?></div>
-
+<div class="scrollcontainer">
 <table id="filestable" data-allow-public-upload="<?php p($_['publicUploadEnabled'])?>" data-preview-x="36" data-preview-y="36">
 	<thead>
 		<tr>
@@ -83,6 +83,7 @@
 	<tfoot>
 	</tfoot>
 </table>
+</div>
 <input type="hidden" name="allowZipDownload" id="allowZipDownload" value="<?php p($_['allowZipDownload']); ?>" />
 <div id="editor"></div><!-- FIXME Do not use this div in your app! It is deprecated and will be removed in the future! -->
 <div id="uploadsize-message" title="<?php p($l->t('Upload too large'))?>">

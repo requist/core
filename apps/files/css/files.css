@@ -72,7 +72,6 @@
 
 #filestable {
 	position: relative;
-	top: 44px;
 	width: 100%;
 }
 
@@ -85,34 +84,36 @@
 }
 
 #filestable tbody tr { background-color:#fff; height:51px; }
+
+.app-files .scrollcontainer {
+	overflow-y: auto;
+	height: 100%;
+}
+
+.app-files .app-content-files {
+	height: 100%;
+}
+
+.app-files #app-content {
+	position: relative;
+	overflow: hidden;
+}
 /**
  * Override global #controls styles
  * to be more flexible / relative
  */
 .app-files #controls {
+	position: relative;
 	top: auto;
-	left: 230px;
-	position: absolute;
-}
-
-.app-files.no-sidebar #controls {
-	left: 0px;
-}
-
-.app-files #app-navigation {
-	width: 230px;
-}
-
-.app-files #app-settings {
-	width: 229px; /* DUH */
+	left: auto;
+	right: auto;
+	width: 100%;
+	box-sizing: border-box;
+	-moz-box-sizing: border-box;
 }
 
 .app-files #app-settings input {
 	width: 90%;
-}
-
-.app-files table.multiselect thead {
-	left: 230px;
 }
 
 #filestable tbody tr { background-color:#fff; height:40px; }
@@ -206,17 +207,17 @@ table th#headerDate, table td.date {
 }
 
 /* Multiselect bar */
-#filestable.multiselect {
-	top: 95px;
+table.multiselect {
+	/* shift down the table to accomodate for the absolute header */
+	margin-top: 50px;
 }
 table.multiselect thead {
-	position: fixed;
-	top: 89px;
+	position: absolute;
 	z-index: 10;
+	/* shift up header */
+	top: -50px;
 	-moz-box-sizing: border-box;
 	box-sizing: border-box;
-	left: 0;
-	padding-left: 80px;
 	width: 100%;
 }
 
