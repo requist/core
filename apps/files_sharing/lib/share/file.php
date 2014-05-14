@@ -33,10 +33,12 @@ class OC_Share_Backend_File implements OCP\Share_Backend_File_Dependent {
 	private $path;
 
 	public function isValidSource($itemSource, $uidOwner) {
-		$query = \OC_DB::prepare('SELECT `name` FROM `*PREFIX*filecache` WHERE `fileid` = ?');
-		$result = $query->execute(array($itemSource));
-		if ($row = $result->fetchRow()) {
-			$this->path = $row['name'];
+		$path = \OC\Files\Filesystem::getPath($itemSource);
+		if ($path) {
+			// FIXME: attributes should not be set here,
+			// keeping this pattern for now to avoid unexpected
+			// regressions
+			$this->path = basename($path);
 			return true;
 		}
 		return false;
@@ -181,8 +183,13 @@ class OC_Share_Backend_File implements OCP\Share_Backend_File_Dependent {
 		return $source;
 	}
 
+	/**
+	 * @param string $target
+	 * @param string $mountPoint
+	 * @param string $itemType
+	 * @return array|false source item
+	 */
 	public static function getSource($target, $mountPoint, $itemType) {
-
 		if ($itemType === 'folder') {
 			$source = \OCP\Share::getItemSharedWith('folder', $mountPoint, \OC_Share_Backend_File::FORMAT_SHARED_STORAGE);
 			if ($source && $target !== '') {

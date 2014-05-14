@@ -79,7 +79,7 @@ class Helper {
 	 * @param array $linkItem link item array
 	 * @param string $password optional password
 	 *
-	 * @return true if authorized, false otherwise
+	 * @return boolean true if authorized, false otherwise
 	 */
 	public static function authenticate($linkItem, $password) {
 		if ($password !== null) {
@@ -125,9 +125,13 @@ class Helper {
 
 
 		$ids = array();
-		while ($path !== '' && $path !== '.' && $path !== '/') {
+		while ($path !== dirname($path)) {
 			$info = $ownerView->getFileInfo($path);
-			$ids[] = $info['fileid'];
+			if ($info instanceof \OC\Files\FileInfo) {
+				$ids[] = $info['fileid'];
+			} else {
+				\OCP\Util::writeLog('sharing', 'No fileinfo available for: ' . $path, \OCP\Util::WARN);
+			}
 			$path = dirname($path);
 		}
 

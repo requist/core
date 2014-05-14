@@ -32,11 +32,11 @@ class OC_Helper {
 
 	/**
 	 * @brief Creates an url using a defined route
-	 * @param $route
+	 * @param string $route
 	 * @param array $parameters
 	 * @return
 	 * @internal param array $args with param=>value, will be appended to the returned url
-	 * @returns string the url
+	 * @return string the url
 	 *
 	 * Returns a url to the given app and file.
 	 */
@@ -78,7 +78,9 @@ class OC_Helper {
 	 * Returns a absolute url to the given app and file.
 	 */
 	public static function linkToAbsolute($app, $file, $args = array()) {
-		return self::linkTo($app, $file, $args);
+		return OC::$server->getURLGenerator()->getAbsoluteURL(
+			self::linkTo($app, $file, $args)
+		);
 	}
 
 	/**
@@ -112,8 +114,10 @@ class OC_Helper {
 	 * Returns a absolute url to the given service.
 	 */
 	public static function linkToRemote($service, $add_slash = true) {
-		return self::makeURLAbsolute(self::linkToRemoteBase($service))
-		. (($add_slash && $service[strlen($service) - 1] != '/') ? '/' : '');
+		return OC::$server->getURLGenerator()->getAbsoluteURL(
+			self::linkToRemoteBase($service)
+				. (($add_slash && $service[strlen($service) - 1] != '/') ? '/' : '')
+		);
 	}
 
 	/**
@@ -125,8 +129,12 @@ class OC_Helper {
 	 * Returns a absolute url to the given service.
 	 */
 	public static function linkToPublic($service, $add_slash = false) {
-		return self::linkToAbsolute('', 'public.php') . '?service=' . $service
-		. (($add_slash && $service[strlen($service) - 1] != '/') ? '/' : '');
+		return OC::$server->getURLGenerator()->getAbsoluteURL(
+			self::linkTo(
+				'', 'public.php') . '?service=' . $service
+				. (($add_slash && $service[strlen($service) - 1] != '/') ? '/' : ''
+			)
+		);
 	}
 
 	/**
@@ -487,7 +495,7 @@ class OC_Helper {
 	/**
 	 * detect if a given program is found in the search PATH
 	 *
-	 * @param $name
+	 * @param string $name
 	 * @param bool $path
 	 * @internal param string $program name
 	 * @internal param string $optional search path, defaults to $PATH
@@ -662,8 +670,8 @@ class OC_Helper {
 	/**
 	 * Adds a suffix to the name in case the file exists
 	 *
-	 * @param $path
-	 * @param $filename
+	 * @param string $path
+	 * @param string $filename
 	 * @return string
 	 */
 	public static function buildNotExistingFileName($path, $filename) {
@@ -674,8 +682,8 @@ class OC_Helper {
 	/**
 	 * Adds a suffix to the name in case the file exists
 	 *
-	 * @param $path
-	 * @param $filename
+	 * @param string $path
+	 * @param string $filename
 	 * @return string
 	 */
 	public static function buildNotExistingFileNameForView($path, $filename, \OC\Files\View $view) {
@@ -724,10 +732,22 @@ class OC_Helper {
 	 * @param string $parent
 	 * @return bool
 	 */
-	public static function issubdirectory($sub, $parent) {
-		if (strpos(realpath($sub), realpath($parent)) === 0) {
+	public static function isSubDirectory($sub, $parent) {
+		$realpathSub = realpath($sub);
+		$realpathParent = realpath($parent);
+
+		// realpath() may return false in case the directory does not exist
+		// since we can not be sure how different PHP versions may behave here
+		// we do an additional check whether realpath returned false
+		if($realpathSub === false ||  $realpathParent === false) {
+			return false;
+		}
+
+		// Check whether $sub is a subdirectory of $parent
+		if (strpos($realpathSub, $realpathParent) === 0) {
 			return true;
 		}
+
 		return false;
 	}
 
@@ -755,7 +775,7 @@ class OC_Helper {
 	/**
 	 * @brief replaces a copy of string delimited by the start and (optionally) length parameters with the string given in replacement.
 	 *
-	 * @param $string
+	 * @param string $string
 	 * @param string $replacement The replacement string.
 	 * @param int $start If start is positive, the replacing will begin at the start'th offset into string. If start is negative, the replacing will begin at the start'th character from the end of string.
 	 * @param int $length Length of the part to be replaced
