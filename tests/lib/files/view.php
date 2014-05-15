@@ -629,7 +629,6 @@ class View extends \PHPUnit_Framework_TestCase {
 	}
 
 	/**
-<<<<<<< HEAD
 	 * @dataProvider tooLongPathDataProvider
 	 * @expectedException \OCP\Files\InvalidPathException
 	 */
