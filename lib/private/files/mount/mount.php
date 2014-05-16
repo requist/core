@@ -131,6 +131,9 @@ class Mount {
 		} else {
 			$internalPath = substr($path, strlen($this->mountPoint));
 		}
+		if ($internalPath === false) {
+			$internalPath = '';
+		}
 		return $internalPath;
 	}
 
