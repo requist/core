@@ -597,6 +597,10 @@
 			// size column
 			if (typeof(fileData.size) !== 'undefined' && fileData.size >= 0) {
 				simpleSize = humanFileSize(parseInt(fileData.size, 10));
+				// make sure the size unit is always 2 characters wide to improve alignment
+				if (simpleSize.substr(-2) === ' B') {
+					simpleSize += '\u2007'; // 1em wide space;
+				}
 				sizeColor = Math.round(160-Math.pow((fileData.size/(1024*1024)),2));
 			} else {
 				simpleSize = t('files', 'Pending');

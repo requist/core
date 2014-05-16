@@ -1186,7 +1186,7 @@ $.fn.filterAttr = function(attr_name, attr_value) {
  * @return {string}
  */
 function humanFileSize(size) {
-	var humanList = ['B', 'kB', 'MB', 'GB', 'TB'];
+	var humanList = ['B', 'KB', 'MB', 'GB', 'TB'];
 	// Calculate Log with base 1024: size = 1024 ** order
 	var order = size?Math.floor(Math.log(size) / Math.log(1024)):0;
 	// Stay in range of the byte sizes that are defined
