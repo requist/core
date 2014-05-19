@@ -763,7 +763,7 @@ label.infield { cursor:text !important; top:1.05em; left:.85em; }
 	min-height: 100%;
 	margin: 0 auto -82px 0;
 }
-#apps-management, #navigation .push {
+#apps-management {
 	height: 72px;
 }
 #apps-management {
