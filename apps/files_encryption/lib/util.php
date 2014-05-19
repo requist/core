@@ -54,7 +54,7 @@ class Util {
 
 	/**
 	 * @param \OC\Files\View $view
-	 * @param $userId
+	 * @param string $userId
 	 * @param bool $client
 	 */
 	public function __construct($view, $userId, $client = false) {
@@ -1160,7 +1160,9 @@ class Util {
 
 	/**
 	 * @brief check if files are already migrated to the encryption system
-	 * @return false|integer migration status, false = if user doesn't exists
+	 * @return int|false migration status, false = in case of no record
+	 * @note If records are not being returned, check for a hidden space
+	 *       at the start of the uid in db
 	 */
 	public function getMigrationStatus() {
 
@@ -1288,8 +1290,7 @@ class Util {
 
 	/**
 	 * @brief get owner of the shared files.
-	 * @param $id
-	 * @internal param int $Id of a share
+	 * @param int $id ID of a share
 	 * @return string owner
 	 */
 	public function getOwnerFromSharedFile($id) {
@@ -1369,7 +1370,7 @@ class Util {
 	}
 
 	/**
-	 * @param $password
+	 * @param string $password
 	 * @return bool
 	 */
 	public function checkRecoveryPassword($password) {
@@ -1529,7 +1530,7 @@ class Util {
 
 	/**
 	 * @brief check if the file is stored on a system wide mount point
-	 * @param $path relative to /data/user with leading '/'
+	 * @param string $path relative to /data/user with leading '/'
 	 * @return boolean
 	 */
 	public function isSystemWideMountPoint($path) {

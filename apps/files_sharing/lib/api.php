@@ -386,7 +386,7 @@ class Api {
 	/**
 	 * @brief update password for public link share
 	 * @param array $share information about the share
-	 * @param type $params 'password'
+	 * @param array $params 'password'
 	 * @return \OC_OCS_Result
 	 */
 	private static function updatePassword($share, $params) {
@@ -418,13 +418,18 @@ class Api {
 			return  new \OC_OCS_Result(null, 404, "share doesn't exists, can't change password");
 		}
 
-		$result = \OCP\Share::shareItem(
-				$itemType,
-				$itemSource,
-				\OCP\Share::SHARE_TYPE_LINK,
-				$shareWith,
-				$permissions
-				);
+		try {
+			$result = \OCP\Share::shareItem(
+					$itemType,
+					$itemSource,
+					\OCP\Share::SHARE_TYPE_LINK,
+					$shareWith,
+					$permissions
+					);
+		} catch (\Exception $e) {
+			return new \OC_OCS_Result(null, 403, $e->getMessage());
+		}
+
 		if($result) {
 			return new \OC_OCS_Result();
 		}

@@ -9,8 +9,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: ownCloud\n"
 "Report-Msgid-Bugs-To: translations@owncloud.org\n"
-"POT-Creation-Date: 2014-05-14 01:54-0400\n"
-"PO-Revision-Date: 2014-05-14 05:54+0000\n"
+"POT-Creation-Date: 2014-05-17 01:54-0400\n"
+"PO-Revision-Date: 2014-05-17 05:54+0000\n"
 "Last-Translator: I Robot\n"
 "Language-Team: Slovak (Slovakia) (http://www.transifex.com/projects/p/owncloud/language/sk_SK/)\n"
 "MIME-Version: 1.0\n"
@@ -49,15 +49,15 @@ msgstr "Email odoslaný"
 msgid "You need to set your user email before being able to send test emails."
 msgstr "Musíte nastaviť svoj po​​užívateľský email, než budete môcť odoslať testovací email."
 
-#: admin/controller.php:116 templates/admin.php:316
+#: admin/controller.php:116 templates/admin.php:317
 msgid "Send mode"
 msgstr "Mód odosielania"
 
-#: admin/controller.php:118 templates/admin.php:329 templates/personal.php:150
+#: admin/controller.php:118 templates/admin.php:330 templates/personal.php:144
 msgid "Encryption"
 msgstr "Šifrovanie"
 
-#: admin/controller.php:120 templates/admin.php:353
+#: admin/controller.php:120 templates/admin.php:354
 msgid "Authentication method"
 msgstr "Autentifikačná metóda"
 
@@ -191,7 +191,7 @@ msgstr "Úložisko nepodporuje zmenu hesla, ale šifrovací kľúč používate�
 msgid "Unable to change password"
 msgstr "Zmena hesla sa nepodarila"
 
-#: js/admin.js:73
+#: js/admin.js:81
 msgid "Sending..."
 msgstr "Odosielam..."
 
@@ -276,11 +276,11 @@ msgid "Decrypting files... Please wait, this can take some time."
 msgstr "Dešifrujem súbory ... Počkajte prosím, môže to chvíľu trvať."
 
 #: js/personal.js:324
-msgid "Delete encryptin keys permanently."
+msgid "Delete encryption keys permanently."
 msgstr ""
 
 #: js/personal.js:338
-msgid "Restore encryptin keys."
+msgid "Restore encryption keys."
 msgstr ""
 
 #: js/users.js:47
@@ -516,148 +516,143 @@ msgstr "Povoliť aplikáciám používať API na zdieľanie"
 msgid "Allow links"
 msgstr "Povoliť odkazy"
 
-#: templates/admin.php:220
-msgid "Allow users to share items to the public with links"
-msgstr "Povoliť používateľom zdieľať položky pre verejnosť cez odkazy"
+#: templates/admin.php:223
+msgid "Enforce password protection"
+msgstr ""
 
-#: templates/admin.php:227
+#: templates/admin.php:226
 msgid "Allow public uploads"
 msgstr "Povoliť verejné nahrávanie súborov"
 
-#: templates/admin.php:228
-msgid ""
-"Allow users to enable others to upload into their publicly shared folders"
-msgstr "Povoliť používateľom umožniť iným používateľom nahrávať do ich zdieľaného priečinka"
-
-#: templates/admin.php:235
-msgid "Allow resharing"
-msgstr "Povoliť zdieľanie ďalej"
-
-#: templates/admin.php:236
-msgid "Allow users to share items shared with them again"
-msgstr "Povoliť používateľom ďalej zdieľať zdieľané položky"
-
-#: templates/admin.php:243
-msgid "Allow users to share with anyone"
-msgstr "Povoliť používateľom zdieľať s kýmkoľvek"
-
-#: templates/admin.php:246
-msgid "Allow users to only share with users in their groups"
-msgstr "Povoliť používateľom zdieľať len s používateľmi v ich skupinách"
-
-#: templates/admin.php:253
-msgid "Allow mail notification"
-msgstr "Povoliť odosielať upozornenia emailom"
-
-#: templates/admin.php:254
-msgid "Allow users to send mail notification for shared files"
-msgstr "Povoliť používateľom zasielať emailom oznámenie o zdieľaní súborov"
-
-#: templates/admin.php:262
+#: templates/admin.php:230
 msgid "Set default expiration date"
 msgstr ""
 
-#: templates/admin.php:263
+#: templates/admin.php:232
 msgid "Expire after "
 msgstr "Platnosť"
 
-#: templates/admin.php:266
+#: templates/admin.php:235
 msgid "days"
 msgstr "dni"
 
-#: templates/admin.php:269
+#: templates/admin.php:238
 msgid "Enforce expiration date"
 msgstr ""
 
-#: templates/admin.php:270
-msgid "Expire shares by default after N days"
-msgstr ""
+#: templates/admin.php:242
+msgid "Allow users to share items to the public with links"
+msgstr "Povoliť používateľom zdieľať položky pre verejnosť cez odkazy"
 
-#: templates/admin.php:278
+#: templates/admin.php:252
+msgid "Allow resharing"
+msgstr "Povoliť zdieľanie ďalej"
+
+#: templates/admin.php:253
+msgid "Allow users to share items shared with them again"
+msgstr "Povoliť používateľom ďalej zdieľať zdieľané položky"
+
+#: templates/admin.php:260
+msgid "Allow users to share with anyone"
+msgstr "Povoliť používateľom zdieľať s kýmkoľvek"
+
+#: templates/admin.php:263
+msgid "Allow users to only share with users in their groups"
+msgstr "Povoliť používateľom zdieľať len s používateľmi v ich skupinách"
+
+#: templates/admin.php:270
+msgid "Allow mail notification"
+msgstr "Povoliť odosielať upozornenia emailom"
+
+#: templates/admin.php:271
+msgid "Allow users to send mail notification for shared files"
+msgstr "Povoliť používateľom zasielať emailom oznámenie o zdieľaní súborov"
+
+#: templates/admin.php:279
 msgid "Security"
 msgstr "Zabezpečenie"
 
-#: templates/admin.php:291
+#: templates/admin.php:292
 msgid "Enforce HTTPS"
 msgstr "Vynútiť HTTPS"
 
-#: templates/admin.php:293
+#: templates/admin.php:294
 #, php-format
 msgid "Forces the clients to connect to %s via an encrypted connection."
 msgstr "Vynúti pripájanie klientov k %s šifrovaným pripojením."
 
-#: templates/admin.php:299
+#: templates/admin.php:300
 #, php-format
 msgid ""
 "Please connect to your %s via HTTPS to enable or disable the SSL "
 "enforcement."
 msgstr "Pripojte sa k %s cez HTTPS pre povolenie alebo zakázanie vynútenia SSL."
 
-#: templates/admin.php:311
+#: templates/admin.php:312
 msgid "Email Server"
 msgstr "Email server"
 
-#: templates/admin.php:313
+#: templates/admin.php:314
 msgid "This is used for sending out notifications."
 msgstr "Používa sa na odosielanie upozornení."
 
-#: templates/admin.php:344
+#: templates/admin.php:345
 msgid "From address"
 msgstr "Z adresy"
 
-#: templates/admin.php:366
+#: templates/admin.php:367
 msgid "Authentication required"
 msgstr "Vyžaduje sa overenie"
 
-#: templates/admin.php:370
+#: templates/admin.php:371
 msgid "Server address"
 msgstr "Adresa servera"
 
-#: templates/admin.php:374
+#: templates/admin.php:375
 msgid "Port"
 msgstr "Port"
 
-#: templates/admin.php:379
+#: templates/admin.php:380
 msgid "Credentials"
 msgstr "Prihlasovanie údaje"
 
-#: templates/admin.php:380
+#: templates/admin.php:381
 msgid "SMTP Username"
 msgstr "SMTP používateľské meno"
 
-#: templates/admin.php:383
+#: templates/admin.php:384
 msgid "SMTP Password"
 msgstr "SMTP heslo"
 
-#: templates/admin.php:387
+#: templates/admin.php:388
 msgid "Test email settings"
 msgstr "Nastavenia testovacieho emailu"
 
-#: templates/admin.php:388
+#: templates/admin.php:389
 msgid "Send email"
 msgstr "Odoslať email"
 
-#: templates/admin.php:393
+#: templates/admin.php:394
 msgid "Log"
 msgstr "Záznam"
 
-#: templates/admin.php:394
+#: templates/admin.php:395
 msgid "Log level"
 msgstr "Úroveň záznamu"
 
-#: templates/admin.php:426
+#: templates/admin.php:427
 msgid "More"
 msgstr "Viac"
 
-#: templates/admin.php:427
+#: templates/admin.php:428
 msgid "Less"
 msgstr "Menej"
 
-#: templates/admin.php:433 templates/personal.php:202
+#: templates/admin.php:434 templates/personal.php:196
 msgid "Version"
 msgstr "Verzia"
 
-#: templates/admin.php:437 templates/personal.php:205
+#: templates/admin.php:438 templates/personal.php:199
 msgid ""
 "Developed by the <a href=\"http://ownCloud.org/contact\" "
 "target=\"_blank\">ownCloud community</a>, the <a "
@@ -810,41 +805,30 @@ msgstr "Jazyk"
 msgid "Help translate"
 msgstr "Pomôcť s prekladom"
 
-#: templates/personal.php:137
-msgid "WebDAV"
-msgstr "WebDAV"
-
-#: templates/personal.php:139
-#, php-format
-msgid ""
-"Use this address to <a href=\"%s\" target=\"_blank\">access your Files via "
-"WebDAV</a>"
-msgstr "Použite túto linku <a href=\"%s\" target=\"_blank\">pre prístup k vašim súborom cez WebDAV</a>"
-
-#: templates/personal.php:156
+#: templates/personal.php:150
 msgid "The encryption app is no longer enabled, please decrypt all your files"
 msgstr "Šifrovacia aplikácia už nie je spustená, dešifrujte všetky svoje súbory."
 
-#: templates/personal.php:162
+#: templates/personal.php:156
 msgid "Log-in password"
 msgstr "Prihlasovacie heslo"
 
-#: templates/personal.php:167
+#: templates/personal.php:161
 msgid "Decrypt all Files"
 msgstr "Dešifrovať všetky súbory"
 
-#: templates/personal.php:180
+#: templates/personal.php:174
 msgid ""
 "Your encryption keys are moved to a backup location. If something went wrong"
 " you can restore the keys. Only delete them permanently if you are sure that"
 " all files are decrypted correctly."
 msgstr ""
 
-#: templates/personal.php:184
+#: templates/personal.php:178
 msgid "Restore Encryption Keys"
 msgstr ""
 
-#: templates/personal.php:188
+#: templates/personal.php:182
 msgid "Delete Encryption Keys"
 msgstr ""
 
