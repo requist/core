@@ -54,8 +54,7 @@ class Shared extends \OC\Files\Storage\Common implements ISharedStorage{
 
 	/**
 	 * @brief Get the source file path, permissions, and owner for a shared file
-	 * @param string Shared target file path
-	 * @param string $target
+	 * @param string $target Shared target file path
 	 * @return Returns array with the keys path, permissions, and owner or false if not found
 	 */
 	public function getFile($target) {
@@ -78,8 +77,7 @@ class Shared extends \OC\Files\Storage\Common implements ISharedStorage{
 
 	/**
 	 * @brief Get the source file path for a shared file
-	 * @param string Shared target file path
-	 * @param string $target
+	 * @param string $target Shared target file path
 	 * @return string source file path or false if not found
 	 */
 	public function getSourcePath($target) {
@@ -102,7 +100,7 @@ class Shared extends \OC\Files\Storage\Common implements ISharedStorage{
 
 	/**
 	 * @brief Get the permissions granted for a shared file
-	 * @param string Shared target file path
+	 * @param string $target Shared target file path
 	 * @return int CRUDS permissions granted
 	 */
 	public function getPermissions($target) {
