@@ -13,16 +13,18 @@ $(document).ready(function() {
 
 	var sharesLoaded = false;
 
-	if (typeof OC.Share !== 'undefined' && typeof FileActions !== 'undefined') {
+	if (typeof OC.Share !== 'undefined' && OCA.Files) {
 		// TODO: make a separate class for this or a hook or jQuery event ?
-		var oldCreateRow = OCA.Files.FileList.prototype._createRow;
-		OCA.Files.FileList.prototype._createRow = function(fileData) {
-			var tr = oldCreateRow.apply(this, arguments);
-			if (fileData.shareOwner) {
-				tr.attr('data-share-owner', fileData.shareOwner);
-			}
-			return tr;
-		};
+		if (OCA.Files.FileList) {
+			var oldCreateRow = OCA.Files.FileList.prototype._createRow;
+			OCA.Files.FileList.prototype._createRow = function(fileData) {
+				var tr = oldCreateRow.apply(this, arguments);
+				if (fileData.shareOwner) {
+					tr.attr('data-share-owner', fileData.shareOwner);
+				}
+				return tr;
+			};
+		}
 
 		$('#fileList').on('fileActionsReady',function(){
 			var $fileList = $(this);
