@@ -24,7 +24,7 @@ class MDB2SchemaManager {
 	}
 
 	/**
-	 * @brief saves database scheme to xml file
+	 * saves database scheme to xml file
 	 * @param string $file name of file
 	 * @param int|string $mode
 	 * @return bool
@@ -38,7 +38,7 @@ class MDB2SchemaManager {
 	}
 
 	/**
-	 * @brief Creates tables from XML file
+	 * Creates tables from XML file
 	 * @param string $file file to read structure from
 	 * @return bool
 	 *
@@ -51,7 +51,7 @@ class MDB2SchemaManager {
 	}
 
 	/**
-	 * @brief update the database scheme
+	 * update the database scheme
 	 * @param string $file file to read structure from
 	 * @return string|boolean
 	 */
@@ -86,7 +86,7 @@ class MDB2SchemaManager {
 				$column->oldColumnName = $platform->quoteIdentifier($column->oldColumnName);
 			}
 		}
-		
+
 		if ($generateSql) {
 			return $this->generateChangeScript($schemaDiff);
 		}
