@@ -65,15 +65,28 @@ OCA.Sharing.App = {
 	_extendFileList: function(fileList) {
 		// remove size column from summary
 		fileList.fileSummary.$el.find('.filesize').remove();
+	},
+
+	/**
+	 * Replace the window.FileList and window.FileActions globals to make
+	 * legacy apps work properly.
+	 */
+	replaceGlobalsHack: function(fileList) {
+		window.FileList = fileList;
+		window.FileActions = fileList.fileActions;
 	}
 };
 
 $(document).ready(function() {
 	$('#app-content-sharingin').one('show', function(e) {
 		OCA.Sharing.App.initSharingIn($(e.target));
+
+		OCA.Sharing.App.replaceGlobalsHack(OCA.Sharing.App._inFileList);
 	});
 	$('#app-content-sharingout').one('show', function(e) {
 		OCA.Sharing.App.initSharingOut($(e.target));
+
+		OCA.Sharing.App.replaceGlobalsHack(OCA.Sharing.App._outFileList);
 	});
 });
 
