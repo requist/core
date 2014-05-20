@@ -25,7 +25,7 @@ OCP\Util::addScript('files_sharing', 'share');
 		"id" => 'sharingin',
 		"appname" => 'files_sharing',
 		"script" => 'list.php',
-		"order" => 3,
+		"order" => 10,
 		"name" => $l->t('Shared with you')
 	)
 );
@@ -34,7 +34,7 @@ OCP\Util::addScript('files_sharing', 'share');
 		"id" => 'sharingout',
 		"appname" => 'files_sharing',
 		"script" => 'list.php',
-		"order" => 4,
+		"order" => 15,
 		"name" => $l->t('Shared with others')
 	)
 );
