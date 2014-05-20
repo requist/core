@@ -52,12 +52,21 @@ class Api {
 			return self::collectShares($params);
 		}
 
-		$share = \OCP\Share::getItemShared('file', null);
+		$shares = \OCP\Share::getItemShared('file', null);
 
-		if ($share === false) {
+		if ($shares === false) {
 			return new \OC_OCS_Result(null, 404, 'could not get shares');
 		} else {
-			return new \OC_OCS_Result($share);
+			$newShares = array();
+			foreach ($shares as $share) {
+				if ($share['item_type'] === 'file') {
+					// FIXME: this will internally resolve the file just to get the mime type,
+					// there must be a better way
+					$share['mimetype'] = \OC\Files\Filesystem::getMimeType($share['path']);
+				}
+				$newShares[] = $share;
+			}
+			return new \OC_OCS_Result($newShares);
 		}
 
 	}
@@ -205,7 +214,16 @@ class Api {
 	private static function getFilesSharedWithMe() {
 		try	{
 			$shares = \OCP\Share::getItemsSharedWith('file');
-			$result = new \OC_OCS_Result($shares);
+			$newShares = array();
+			foreach ($shares as $share) {
+				if ($share['item_type'] === 'file') {
+					// FIXME: this will internally resolve the file just to get the mime type,
+					// there must be a better way
+					$share['mimetype'] = \OC\Files\Filesystem::getMimeType($share['file_target']);
+				}
+				$newShares[] = $share;
+			}
+			$result = new \OC_OCS_Result($newShares);
 		} catch (\Exception $e) {
 			$result = new \OC_OCS_Result(null, 403, $e->getMessage());
 		}
