@@ -18,9 +18,18 @@ OCA.Sharing.PublicApp = {
 	_initialized: false,
 
 	initialize: function($el) {
+		var fileActions;
 		if (this._initialized) {
 			return;
 		}
+		fileActions = new OCA.Files.FileActions();
+		// default actions
+		fileActions.registerDefaultActions();
+		// legacy actions
+		fileActions.merge(window.FileActions);
+		// regular actions
+		fileActions.merge(OCA.Files.fileActions);
+
 		this._initialized = true;
 		// file list mode ?
 		if ($el.find('#filestable')) {
@@ -29,7 +38,8 @@ OCA.Sharing.PublicApp = {
 				{
 					scrollContainer: $(window),
 					dragOptions: dragOptions,
-					folderDropOptions: folderDropOptions
+					folderDropOptions: folderDropOptions,
+					fileActions: fileActions
 				}
 			);
 			this.files = OCA.Files.Files;
@@ -117,10 +127,8 @@ OCA.Sharing.PublicApp = {
 				};
 			});
 
-			this.fileActions = _.extend({}, OCA.Files.FileActions);
-			this.fileActions.registerDefaultActions(this.fileList);
-			delete this.fileActions.actions.all.Share;
-			this.fileList.setFileActions(this.fileActions);
+			// do not allow sharing from the public page
+			delete this.fileList.fileActions.actions.all.Share;
 
 			this.fileList.changeDirectory($('#dir').val() || '/', false, true);
 
