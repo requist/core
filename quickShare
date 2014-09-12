@@ -1,0 +1,78 @@
+In Applicatiopn.php:
+
+namespace OCA\MyVivino\AppInfo;
+
+
+use \OCP\AppFramework\App;
+use OCA\MyVivino\Db\WineMapper;
+use \OCA\MyVivino\Db\AuthorDAO;
+use \OCA\MyVivino\Db\ExternalDetails;
+use \OCA\MyVivino\Db\ExternalFood;
+use \OCA\MyVivino\Db\ExternalGrape;
+use \OCA\MyVivino\Db\ExternalPrice;
+use \OCA\MyVivino\Db\Externalwine;
+use \OCA\MyVivino\Db\SqliteDb;
+use \OCA\MyVivino\Db\Trader;
+use \OCA\MyVivino\Db\VivinoConnection;
+use \OCA\MyVivino\Controller\PageController;
+use OCP\AppFramework\IAppContainer;
+
+class Application extends App {
+
+
+	public function __construct (array $urlParams=array()) {
+		parent::__construct('myvivino', $urlParams);
+
+		$container = $this->getContainer();
+
+		/**
+		 * Controllers
+		 */
+		$container->registerService('PageController', function($c) {
+			return new PageController(
+				$c->query('AppName'), 
+				$c->query('Request'),
+				$c->query('UserId')
+			);
+		});
+
+
+		/**
+		 * Core
+		 */
+		$container->registerService('UserId', function($c) {
+			return \OCP\User::getUser();
+		});	
+
+		/**
+		* Database Layer
+		*/
+		$container->registerService('WineMapper', function ($c) {
+			/** @var IAppContainer $c */
+			return new WineMapper($c->getServer()->getDb());
+		});
+			
+		$container->registerService('AuthorDAO', function($c) {
+			return new AuthorDAO($c->query('ServerContainer')->getDb());
+		});
+		
+	}
+	
+And then in apps/myvivino/lib/db/winemapper.php:
+
+	
+namespace OCA\MyVivino\Db;
+
+use OCP\IDb;
+use OCP\AppFramework\Db\Mapper;
+
+
+class WineMapper extends Mapper {
+
+	public function __construct(IDb $db){
+		parent::__construct($db, 'wine_data');
+	}
+
+		
+		
+		
