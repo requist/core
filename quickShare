@@ -73,6 +73,13 @@ class WineMapper extends Mapper {
 		parent::__construct($db, 'wine_data');
 	}
 
-		
+	
+	
+
+And I try to simply call it like:
+
+$intern = new WineMapper();
+
+
 		
 		
